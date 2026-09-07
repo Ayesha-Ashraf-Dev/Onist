@@ -13,6 +13,26 @@
     const preloader = document.getElementById("preloader");
     if (!preloader) return;
 
+    let hasSeenPreloader = false;
+    try {
+      hasSeenPreloader = sessionStorage.getItem("onist-preloader-seen") === "true";
+    } catch (error) {
+      hasSeenPreloader = false;
+    }
+
+    if (hasSeenPreloader) {
+      preloader.classList.add("is-done");
+      preloader.style.display = "none";
+      revealHero();
+      return;
+    }
+
+    try {
+      sessionStorage.setItem("onist-preloader-seen", "true");
+    } catch (error) {
+      // Continue with the animation when session storage is unavailable.
+    }
+
     if (reduced || typeof gsap === "undefined" || typeof flubber === "undefined") {
       preloader.classList.add("is-done");
       preloader.style.display = "none";
