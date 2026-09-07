@@ -1008,6 +1008,10 @@ body::-webkit-scrollbar {
 @media (max-width: 680px) { .whatsapp-float { right: 16px; bottom: 16px; width: 52px; height: 52px; } .whatsapp-float svg { width: 28px; height: 28px; } }
 @media (prefers-reduced-motion: reduce) { .whatsapp-float { animation: none; } }
 
+/* Normalize the hero search selects with the same outlined control language. */
+.search-panel__field select { appearance: none; -webkit-appearance: none; min-height: 38px; padding: 8px 32px 8px 10px; border: 1px solid var(--border); border-radius: 8px; background-color: rgba(255,255,255,.72); background-image: linear-gradient(45deg, transparent 50%, var(--text-soft) 50%), linear-gradient(135deg, var(--text-soft) 50%, transparent 50%); background-position: calc(100% - 14px) 16px, calc(100% - 9px) 16px; background-repeat: no-repeat; background-size: 5px 5px, 5px 5px; }
+.search-panel__field select:hover, .search-panel__field select:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(19,87,245,.12); outline: none; }
+
 /* Keep depth reserved for the hero presentation. */
 body > *:not(.hero),
 body > *:not(.hero) * {
