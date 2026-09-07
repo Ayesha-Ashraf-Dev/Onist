@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Luxury Car Showcase</title>
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+      background: #0b0b0b;
+      color: #fff;
+    }
+
+    /* fullscreen hero, gradient background via JS/CSS var */
+    .hero {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      will-change: background;
+      background: radial-gradient(circle at 30% 40%, #1a1a2e, #0f0f1a);
+      transition: background 0.8s ease;
+      overflow: hidden;
+    }
+
+    /* glass card container */
+    .car-card {
+      position: relative;
+      width: 90%;
+      max-width: 1300px;
+      height: 80vh;
+      max-height: 800px;
+      background: rgba(20, 20, 30, 0.35);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 48px;
+      padding: 2.5rem 3rem;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.04);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s ease;
+      will-change: transform;
+    }
+
+    /* main layout: left content + right car image */
+    .car-layout {
+      display: flex;
+      flex: 1;
+      gap: 2rem;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* left side */
+    .car-info {
+      flex: 1 1 40%;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      padding-right: 1rem;
+      will-change: transform, opacity;
+      opacity: 1;
+    }
+
+    .car-name {
+      font-size: clamp(2.4rem, 8vw, 4.8rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin-bottom: 0.1rem;
+      color: #f0f0f5;
+    }
+
+    .car-year-price {
+      display: flex;
+      gap: 2rem;
+      font-weight: 400;
+      color: #b0b0c8;
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      letter-spacing: 0.02em;
+      margin-top: 0.2rem;
+    }
+
+    .car-desc {
+      font-size: clamp(0.95rem, 1.3vw, 1.2rem);
+      color: #c8c8dd;
+      max-width: 90%;
+      line-height: 1.6;
+      margin: 0.5rem 0 0.8rem 0;
+      font-weight: 300;
+    }
+
+    .car-specs {
+      display: flex;
+      gap: 2.2rem;
+      flex-wrap: wrap;
+      margin: 0.5rem 0 1.2rem 0;
+      font-size: clamp(0.8rem, 1.2vw, 1rem);
+      color: #a0a0bb;
+    }
+
+    .car-specs span {
+      background: rgba(255, 255, 255, 0.04);
+      padding: 0.3rem 1.2rem;
+      border-radius: 40px;
+      border: 1px solid rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(2px);
+    }
+
+    .cta-btn {
+      align-self: flex-start;
+      background: #ffffff;
+      color: #0b0b0b;
+      border: none;
+      padding: 0.9rem 2.8rem;
+      border-radius: 60px;
+      font-weight: 600;
+      font-size: 1rem;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      transition: box-shadow 0.3s, transform 0.25s cubic-bezier(0.2, 0.9, 0.3, 1.1);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+      will-change: transform, box-shadow;
+      margin-top: 0.2rem;
+    }
+
+    .cta-btn:hover {
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    /* car image container */
+    .car-image-wrapper {
+      flex: 1 1 50%;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      position: relative;
+      height: 100%;
+      min-height: 200px;
+    }
+
+    .car-image {
+      width: 100%;
+      max-width: 650px;
+      height: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.7));
+      will-change: transform, opacity;
+      opacity: 0;
+      transform: translateX(150px) scale(1.03);
+    }
+
+    /* bottom navigation */
+    .nav-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 0.8rem;
+      padding: 0 0.5rem;
+      z-index: 5;
+      position: relative;
+    }
+
+    .dots-container {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.25);
+      cursor: pointer;
+      transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      will-change: transform, width, background;
+    }
+
+    .dot.active {
+      width: 24px;
+      background: #ffffff;
+      box-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
+    }
+
+    .nav-arrows {
+      display: flex;
+      gap: 18px;
+    }
+
+    .arrow-btn {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: #eee;
+      width: 44px;
+      height: 44px;
+      border-radius: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      cursor: pointer;
+      backdrop-filter: blur(6px);
+      transition: background 0.2s, transform 0.15s;
+      will-change: transform;
+    }
+
+    .arrow-btn:hover {
+      background: rgba(255, 255, 255, 0.15);
+      transform: scale(1.05);
+    }
+
+    /* responsive */
+    @media (max-width: 900px) {
+      .car-card {
+        padding: 1.8rem 2rem;
+        height: auto;
+        min-height: 70vh;
+        border-radius: 32px;
+      }
+      .car-layout {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.5rem;
+      }
+      .car-info {
+        padding-right: 0;
+      }
+      .car-image-wrapper {
+        justify-content: center;
+        min-height: 180px;
+      }
+      .car-image {
+        max-width: 380px;
+      }
+      .car-desc {
+        max-width: 100%;
+      }
+    }
+
+    @media (max-width: 550px) {
+      .car-card {
+        padding: 1.2rem 1.2rem;
+        border-radius: 24px;
+        width: 95%;
+        height: auto;
+        min-height: 85vh;
+      }
+      .car-name {
+        font-size: 2.2rem;
+      }
+      .car-year-price {
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      .car-specs {
+        gap: 0.8rem;
+      }
+      .nav-bottom {
+        flex-wrap: wrap;
+        gap: 0.8rem;
+        justify-content: center;
+      }
+      .arrow-btn {
+        width: 38px;
+        height: 38px;
+        font-size: 1rem;
+      }
+    }
+
+    /* hide old text during animation */
+    .text-anim {
+      will-change: transform, opacity;
+    }
+  </style>
+</head>
+<body>
+
+<div class="hero" id="hero">
+  <div class="car-card" id="carCard">
+    <div class="car-layout">
+      <!-- left content -->
+      <div class="car-info" id="carInfo">
+        <div class="car-name text-anim" id="carName">Phantom</div>
+        <div class="car-year-price text-anim" id="carYearPrice">
+          <span>2026</span>
+          <span>$ 450,000</span>
+        </div>
+        <div class="car-desc text-anim" id="carDesc">Timeless elegance, handcrafted perfection. The ultimate statement of luxury.</div>
+        <div class="car-specs text-anim" id="carSpecs">
+          <span>6.7L V12</span>
+          <span>571 hp</span>
+          <span>0–100 4.8s</span>
+        </div>
+        <button class="cta-btn text-anim" id="ctaBtn">Configure</button>
+      </div>
+      <!-- car image -->
+      <div class="car-image-wrapper">
+        <img class="car-image" id="carImage" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='300' viewBox='0 0 600 300'%3E%3Crect width='600' height='300' fill='%23222'/%3E%3Cpath d='M120 160 L180 120 L320 120 L400 160 L440 220 L140 220 Z' fill='%23d4af37' opacity='0.8'/%3E%3Ccircle cx='200' cy='220' r='25' fill='%23111' stroke='%23333' stroke-width='6'/%3E%3Ccircle cx='400' cy='220' r='25' fill='%23111' stroke='%23333' stroke-width='6'/%3E%3Crect x='220' y='130' width='60' height='30' fill='%23aaa'/%3E%3C/svg%3E" alt="Luxury car">
+      </div>
+    </div>
+    <!-- bottom navigation -->
+    <div class="nav-bottom">
+      <div class="dots-container" id="dotsContainer"></div>
+      <div class="nav-arrows">
+        <button class="arrow-btn" id="prevBtn">‹</button>
+        <button class="arrow-btn" id="nextBtn">›</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function() {
+    // ----- DATA -----
+    const slides = [{
+      name: 'Phantom',
+      year: '2026',
+      price: '$ 450,000',
+      desc: 'Timeless elegance, handcrafted perfection. The ultimate statement of luxury.',
+      specs: ['6.7L V12', '571 hp', '0–100 4.8s'],
+      bg: 'radial-gradient(circle at 30% 40%, #1a1a2e, #0f0f1a)',
+      img: 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'600\' height=\'300\' viewBox=\'0 0 600 300\'%3E%3Crect width=\'600\' height=\'300\' fill=\'%23222\'/%3E%3Cpath d=\'M120 160 L180 120 L320 120 L400 160 L440 220 L140 220 Z\' fill=\'%23d4af37\' opacity=\'0.8\'/%3E%3Ccircle cx=\'200\' cy=\'220\' r=\'25\' fill=\'%23111\' stroke=\'%23333\' stroke-width=\'6\'/%3E%3Ccircle cx=\'400\' cy=\'220\' r=\'25\' fill=\'%23111\' stroke=\'%23333\' stroke-width=\'6\'/%3E%3Crect x=\'220\' y=\'130\' width=\'60\' height=\'30\' fill=\'%23aaa\'/%3E%3C/svg%3E'
+    }, {
+      name: 'Spectral',
+      year: '2025',
+      price: '$ 320,000',
+      desc: 'Bold design meets electric performance. A new era of grand touring.',
+      specs: ['Electric', '650 hp', '0–100 3.2s'],
+      bg: 'radial-gradient(circle at 70% 50%, #1f2b3a, #09131c)',
+      img: 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'600\' height=\'300\' viewBox=\'0 0 600 300\'%3E%3Crect width=\'600\' height=\'300\' fill=\'%231a1a2e\'/%3E%3Cpath d=\'M100 150 L170 110 L320 110 L410 160 L450 230 L130 230 Z\' fill=\'%23b0c4de\' opacity=\'0.7\'/%3E%3Ccircle cx=\'190\' cy=\'230\' r=\'28\' fill=\'%23111\' stroke=\'%23444\' stroke-width=\'5\'/%3E%3Ccircle cx=\'410\' cy=\'230\' r=\'28\' fill=\'%23111\' stroke=\'%23444\' stroke-width=\'5\'/%3E%3Crect x=\'230\' y=\'130\' width=\'80\' height=\'25\' fill=\'%23999\'/%3E%3C/svg%3E'
+    }, {
+      name: 'Aura',
+      year: '2027',
+      price: '$ 590,000',
+      desc: 'Hyper-luxury with a futuristic soul. Limited edition masterpiece.',
+      specs: ['4.0L V8 hybrid', '780 hp', '0–100 2.7s'],
+      bg: 'radial-gradient(circle at 20% 70%, #2a1f2e, #0b0810)',
+      img: 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'600\' height=\'300\' viewBox=\'0 0 600 300\'%3E%3Crect width=\'600\' height=\'300\' fill=\'%23222\'/%3E%3Cpath d=\'M140 140 L200 100 L360 100 L440 150 L470 230 L150 230 Z\' fill=\'%23c0c0c0\' opacity=\'0.7\'/%3E%3Ccircle cx=\'210\' cy=\'230\' r=\'30\' fill=\'%23111\' stroke=\'%23555\' stroke-width=\'6\'/%3E%3Ccircle cx=\'430\' cy=\'230\' r=\'30\' fill=\'%23111\' stroke=\'%23555\' stroke-width=\'6\'/%3E%3Crect x=\'250\' y=\'120\' width=\'70\' height=\'30\' fill=\'%23bbb\'/%3E%3C/svg%3E'
+    }];
+
+    let currentIndex = 0;
+    let autoplayTimer = null;
+    let isPaused = false;
+    let isAnimating = false;
+
+    // DOM refs
+    const hero = document.getElementById('hero');
+    const carCard = document.getElementById('carCard');
+    const carName = document.getElementById('carName');
+    const carYearPrice = document.getElementById('carYearPrice');
+    const carDesc = document.getElementById('carDesc');
+    const carSpecs = document.getElementById('carSpecs');
+    const ctaBtn = document.getElementById('ctaBtn');
+    const carImage = document.getElementById('carImage');
+    const dotsContainer = document.getElementById('dotsContainer');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+
+    // build dots
+    function buildDots() {
+      dotsContainer.innerHTML = '';
+      slides.forEach((_, i) => {
+        const dot = document.createElement('div');
+        dot.classList.add('dot');
+        if (i === currentIndex) dot.classList.add('active');
+        dot.dataset.index = i;
+        dot.addEventListener('click', () => changeSlide(i));
+        dotsContainer.appendChild(dot);
+      });
+    }
+    buildDots();
+
+    function updateDots() {
+      const dots = dotsContainer.querySelectorAll('.dot');
+      dots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === currentIndex);
+      });
+    }
+
+    // populate text & image (no animation)
+    function setSlideData(index) {
+      const s = slides[index];
+      carName.textContent = s.name;
+      carYearPrice.innerHTML = `<span>${s.year}</span><span>${s.price}</span>`;
+      carDesc.textContent = s.desc;
+      carSpecs.innerHTML = s.specs.map(sp => `<span>${sp}</span>`).join('');
+      carImage.src = s.img;
+      // background
+      hero.style.background = s.bg;
+    }
+
+    // GSAP timeline animation
+    function animateSlide(newIndex, direction = 1) {
+      if (isAnimating) return;
+      isAnimating = true;
+
+      // gather text elements
+      const textElems = [carName, carYearPrice, carDesc, carSpecs, ctaBtn];
+      // old car image
+      const oldCar = carImage;
+      // new car image (we'll set src before anim)
+      const newCar = carImage; // same element, we change src
+
+      // 1) prepare new slide data (but keep old image visible until crossfade)
+      const newSlide = slides[newIndex];
+      const oldBg = hero.style.background;
+      const newBg = newSlide.bg;
+
+      // store old image src
+      const oldSrc = carImage.src;
+
+      // create timeline
+      const tl = gsap.timeline({
+        defaults: { ease: 'power4.out' },
+        onComplete: () => {
+          isAnimating = false;
+        }
+      });
+
+      // 0) background change (smooth)
+      tl.to(hero, {
+        background: newBg,
+        duration: 0.8,
+        ease: 'power2.inOut',
+        onUpdate: function() {
+          // some browsers need this
+        }
+      }, 0);
+
+      // 1) hide old text (fast)
+      tl.to(textElems, {
+        opacity: 0,
+        y: 20,
+        duration: 0.3,
+        stagger: 0.02,
+        ease: 'power2.in'
+      }, 0.1);
+
+      // 2) move old car left + fade + scale
+      tl.to(oldCar, {
+        x: -120,
+        opacity: 0,
+        scale: 0.96,
+        duration: 0.7,
+        ease: 'power4.out'
+      }, 0.15);
+
+      // 3) swap image and reset new car position (opacity 0, x:150, scale:1.03)
+      tl.call(() => {
+        // update src to new image, reset transforms
+        carImage.src = newSlide.img;
+        // set initial state for new car
+        gsap.set(carImage, { x: 150, opacity: 0, scale: 1.03 });
+      }, [], 0.4);
+
+      // 4) animate new car in
+      tl.to(carImage, {
+        x: 0,
+        opacity: 1,
+        scale: 1,
+        duration: 0.8,
+        ease: 'power4.out'
+      }, 0.5);
+
+      // 5) reveal text with stagger
+      tl.to(textElems, {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        stagger: 0.05,
+        ease: 'power4.out'
+      }, 0.7);
+
+      // 6) card pop: scale 0.985 → 1 with back.out
+      tl.to(carCard, {
+        scale: 1,
+        duration: 0.6,
+        ease: 'back.out(1.6)',
+        onStart: () => {
+          gsap.set(carCard, { scale: 0.985 });
+        }
+      }, 0.7);
+
+      // 7) update dots
+      tl.call(() => {
+        currentIndex = newIndex;
+        updateDots();
+      }, [], 0.1);
+
+      // extra: ensure any leftover
+      tl.set(carCard, { scale: 1 }, 1.3);
+    }
+
+    // change slide with direction
+    function changeSlide(index) {
+      if (isAnimating) return;
+      if (index === currentIndex) return;
+      if (index < 0) index = slides.length - 1;
+      if (index >= slides.length) index = 0;
+
+      const direction = index > currentIndex ? 1 : -1;
+      animateSlide(index, direction);
+      resetAutoplay();
+    }
+
+    function nextSlide() {
+      changeSlide((currentIndex + 1) % slides.length);
+    }
+    function prevSlide() {
+      changeSlide((currentIndex - 1 + slides.length) % slides.length);
+    }
+
+    // autoplay
+    function startAutoplay() {
+      if (autoplayTimer) clearInterval(autoplayTimer);
+      autoplayTimer = setInterval(() => {
+        if (!isPaused && !isAnimating) {
+          nextSlide();
+        }
+      }, 5000);
+    }
+
+    function resetAutoplay() {
+      if (autoplayTimer) {
+        clearInterval(autoplayTimer);
+        startAutoplay();
+      }
+    }
+
+    // pause on hover
+    const heroContainer = document.querySelector('.hero');
+    heroContainer.addEventListener('mouseenter', () => { isPaused = true; });
+    heroContainer.addEventListener('mouseleave', () => { isPaused = false; });
+
+    // event listeners
+    prevBtn.addEventListener('click', prevSlide);
+    nextBtn.addEventListener('click', nextSlide);
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') prevSlide();
+      else if (e.key === 'ArrowRight') nextSlide();
+    });
+
+    // init first slide
+    setSlideData(0);
+    gsap.set(carImage, { x: 0, opacity: 1, scale: 1 });
+    gsap.set(carCard, { scale: 1 });
+    // set text visible
+    const textElems = [carName, carYearPrice, carDesc, carSpecs, ctaBtn];
+    gsap.set(textElems, { opacity: 1, y: 0 });
+    updateDots();
+
+    startAutoplay();
+
+    // extra: expose for debugging
+    window.__slider = { changeSlide, nextSlide, prevSlide, currentIndex };
+  })();
+</script>
+</body>
+</html>

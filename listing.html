@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2008 BMW X5 | Onist Cars</title>
+  <meta name="description" content="2008 BMW X5 for sale in Oranjestad, UK. Automatic gasoline V8 SUV with 164,000 km.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="fav.png">
+  <link rel="stylesheet" href="listing.css">
+  <style>
+    .listing-nav { position: sticky; top: 0; z-index: 10; width: 100%; max-width: none; background: rgba(251, 252, 254, 0.98); border-bottom: 1px solid #dfe5ee; box-shadow: none; backdrop-filter: blur(16px); }
+    .mobile-page-title { display: none; }
+    .listing-links { display: flex; align-items: center; gap: 24px; font-size: 0.8rem; color: #667085; }
+    .listing-links a:hover { color: #1357f5; }
+    .nav-contact { padding: 10px 16px; border-radius: 999px; background: #101827; color: #fff; font-size: 0.78rem; font-weight: 700; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    .nav-contact:hover { transform: translateY(-2px); box-shadow: none; }
+    .vehicle-card { cursor: pointer; }
+    .gallery-main { max-width: 880px; aspect-ratio: 1.62; }
+    .gallery-thumbs { max-width: 880px; grid-template-columns: repeat(4, minmax(70px, 140px)); }
+    .listing-hero { grid-template-columns: minmax(260px, .62fr) minmax(0, 1.5fr); gap: 38px; min-height: 510px; }
+    .listing-summary { grid-column: 1; grid-row: 1; }
+    .gallery { grid-column: 2; grid-row: 1; }
+    .listing-summary h1 { font-size: clamp(3rem, 5vw, 5.6rem); }
+    .gallery-main { width: 100%; max-width: none; aspect-ratio: 1.72; }
+    .showcase-stats { position: absolute; z-index: 4; top: 18px; right: 18px; display: grid; grid-template-columns: repeat(3, minmax(90px, 1fr)); gap: 9px; width: min(58%, 430px); }
+    .showcase-stats div { position: relative; min-height: 62px; padding: 10px 12px; background: rgba(255,255,255,.72); border: 1px solid rgba(19,87,245,.06); backdrop-filter: blur(10px); }
+    .showcase-stats span { display: block; color: #667085; font-size: .56rem; }
+    .showcase-stats strong { display: block; margin-top: 5px; font-family: "Instrument Sans", sans-serif; font-size: .82rem; white-space: nowrap; }
+    .showcase-stats b { position: absolute; top: 8px; right: 9px; color: #101827; font-size: .8rem; }
+    .listing-page > *:not(.listing-hero) *, .contact-modal * { box-shadow: none !important; }
+    .listing-footer { display: grid; grid-template-columns: 1.6fr 1fr 1fr; gap: 40px; padding: 64px max(44px, calc((100% - 1272px) / 2)); border-top: 1px solid #dfe5ee; color: #667085; font-size: .82rem; }
+    .listing-footer > div { display: flex; flex-direction: column; gap: 9px; }
+    .listing-footer__brand img { width: auto; height: 28px; }
+    .listing-footer p { max-width: 230px; margin-top: 10px; line-height: 1.6; }
+    .listing-footer strong { color: #101827; font-family: "Instrument Sans", sans-serif; font-size: .9rem; margin-bottom: 5px; }
+    .listing-footer a:hover { color: #1357f5; }
+    .listing-footer__copyright { grid-column: 1 / -1; max-width: none !important; margin: 24px 0 0 !important; padding-top: 20px; border-top: 1px solid #dfe5ee; }
+    .whatsapp-float { position: fixed; right: 24px; bottom: 24px; z-index: 300; display: grid; place-items: center; width: 58px; height: 58px; border-radius: 50%; background: #25D366; color: #fff; animation: whatsappHeartbeat 1.65s ease-in-out infinite; }
+    .whatsapp-float svg { width: 31px; height: 31px; fill: currentColor; }
+    @keyframes whatsappHeartbeat { 0%, 100% { transform: scale(1); } 12% { transform: scale(1.13); } 24% { transform: scale(1); } 36% { transform: scale(1.09); } 52% { transform: scale(1); } }
+    @media (max-width: 680px) { .whatsapp-float { right: 16px; bottom: 16px; width: 52px; height: 52px; } .whatsapp-float svg { width: 28px; height: 28px; } }
+    @media (prefers-reduced-motion: reduce) { .whatsapp-float { animation: none; } }
+    @media (max-width: 1050px) { .listing-links { display: none; } }
+    @media (max-width: 1050px) { .listing-hero { grid-template-columns: 1fr; } .listing-summary, .gallery { grid-column: auto; grid-row: auto; } .gallery { order: 1; } .listing-summary { order: 2; } }
+    @media (max-width: 680px) { .listing-nav { padding: 0 14px; justify-content: space-between; } .listing-brand, .listing-links, .nav-contact { display: none; } .back-link { display: block; position: absolute; left: 14px; margin: 0; font-size: 0; } .back-link span { display: block; margin: 0; font-size: 1.45rem; line-height: 1; } .mobile-page-title { display: block; margin: auto; font-size: .76rem; font-weight: 600; } .save-button { border: 0; padding: 8px; font-size: 1.35rem; } .save-label { display: none; } .gallery-main { max-width: none; aspect-ratio: .92; border-radius: 18px; overflow: visible; margin-bottom: 145px; } .gallery-thumbs { max-width: none; grid-template-columns: repeat(4, 1fr); } .showcase-stats { top: auto; right: 0; bottom: -132px; width: 100%; grid-template-columns: repeat(2, 1fr); gap: 7px; } .showcase-stats div { min-height: 64px; background: rgba(255,255,255,.94); } .listing-summary h1 { font-size: clamp(2.8rem, 13vw, 4rem); } .listing-summary .eyebrow { display: none; } .listing-footer { grid-template-columns: 1fr 1fr; gap: 28px 20px; padding: 44px 18px 28px; } .listing-footer__copyright { grid-column: 1 / -1; } }
+  </style>
+</head>
+<body>
+  <header class="listing-nav">
+    <a class="listing-brand" href="index.html" aria-label="Back to Onist Cars"><img src="onist.png" alt="Onist"></a>
+    <span class="mobile-page-title">Car Detail</span>
+    <nav class="listing-links" aria-label="Primary navigation">
+      <a href="index.html#inventory">Inventory</a>
+      <a href="index.html#makes">Makes</a>
+      <a href="index.html#why">Why Us</a>
+      <a href="index.html#reviews">Reviews</a>
+      <a href="index.html#faq">FAQ</a>
+    </nav>
+    <a class="back-link" href="index.html#inventory"><span aria-hidden="true">←</span> Back to inventory</a>
+    <button class="nav-contact" type="button" data-open-contact>Contact us</button>
+    <button class="save-button" type="button" aria-label="Save this vehicle" aria-pressed="false"><span aria-hidden="true">♡</span><span class="save-label">Save</span></button>
+  </header>
+
+  <main class="listing-page">
+    <section class="listing-hero" aria-labelledby="listing-title">
+      <div class="gallery reveal-in">
+        <div class="gallery-main">
+          <div class="gallery-count" id="galleryCount">01 / 04</div>
+          <div class="showcase-stats" aria-label="Vehicle highlights">
+            <div><span>Top speed</span><strong>200 KM/H</strong><b>⌁</b></div>
+            <div><span>Acceleration</span><strong>0–100 KM/H</strong><b>◌</b></div>
+            <div><span>Engine</span><strong>V8</strong><b>◈</b></div>
+            <div><span>Fuel type</span><strong>Gasoline</strong><b>⌁</b></div>
+          </div>
+          <div class="gallery-viewport" id="galleryViewport">
+            <div class="gallery-slide is-active"><img src="images/imageOne.png" alt="2008 BMW X5 exterior view"></div>
+            <div class="gallery-slide"><img src="images/ImageTwo.png" alt="2008 BMW X5 front three-quarter view"></div>
+            <div class="gallery-slide"><img src="images/ImageFour.png" alt="2008 BMW X5 side profile"></div>
+            <div class="gallery-slide"><img src="meridian.avif" alt="2008 BMW X5 interior detail"></div>
+          </div>
+          <button class="gallery-arrow gallery-arrow--prev" id="galleryPrev" type="button" aria-label="Previous vehicle image">‹</button>
+          <button class="gallery-arrow gallery-arrow--next" id="galleryNext" type="button" aria-label="Next vehicle image">›</button>
+          <div class="gallery-progress" aria-hidden="true"><span id="galleryProgress"></span></div>
+        </div>
+        <div class="gallery-thumbs" id="galleryThumbs" aria-label="Vehicle images">
+          <button class="gallery-thumb is-active" type="button" aria-label="Show image 1"><img src="images/imageOne.png" alt=""></button>
+          <button class="gallery-thumb" type="button" aria-label="Show image 2"><img src="images/ImageTwo.png" alt=""></button>
+          <button class="gallery-thumb" type="button" aria-label="Show image 3"><img src="images/ImageFour.png" alt=""></button>
+          <button class="gallery-thumb" type="button" aria-label="Show image 4"><img src="meridian.avif" alt=""></button>
+        </div>
+      </div>
+
+      <div class="listing-summary reveal-in reveal-in--delayed">
+        <p class="eyebrow">Onist Select <span>·</span></p>
+        <h1 id="listing-title">2008 BMW <em>X5</em></h1>
+        <p class="listing-subline"><span>2008</span><i></i><span>164,000 km</span><i></i><span>Automatic</span><i></i><span>Gasoline</span><i></i><span>SUV</span></p>
+        <div class="location"><span class="location-pin" aria-hidden="true">⌖</span> United Kingdom</div>
+        <div class="price-block"><span>Asking price</span><strong>USD 19,500</strong></div>
+        <div class="summary-actions"><button class="primary-action" type="button" data-open-contact>Contact us <span aria-hidden="true">↗</span></button><button class="secondary-action" type="button" data-open-contact>Arrange a viewing</button></div>
+        <div class="trust-row"><span><b>✓</b> Verified listing</span><span><b>◈</b> Local seller</span></div>
+      </div>
+    </section>
+
+    <section class="details-grid">
+      <div class="details-main">
+        <section class="detail-section reveal-in">
+          <div class="section-kicker">01 <span>Specifications</span></div>
+          <h2>Technical specifications</h2>
+          <div class="spec-grid">
+            <div><span>Make</span><strong>BMW</strong></div><div><span>Model</span><strong>X5</strong></div><div><span>Year</span><strong>2008</strong></div><div><span>Body style</span><strong>SUV</strong></div>
+            <div><span>Engine</span><strong>V8</strong></div><div><span>Transmission</span><strong>Automatic</strong></div><div><span>Fuel type</span><strong>Gasoline</strong></div><div><span>Seats</span><strong>—</strong></div>
+            <div><span>Mileage</span><strong>164,000 km</strong></div><div><span>Location</span><strong>United Kingdom</strong></div>
+          </div>
+        </section>
+
+        <section class="detail-section reveal-in">
+          <div class="section-kicker">02 <span>Equipment</span></div>
+          <h2>Features</h2>
+          <div class="empty-feature"><span aria-hidden="true">✦</span><p>No specific features listed.</p></div>
+        </section>
+
+        <section class="detail-section reveal-in">
+          <div class="section-kicker">03 <span>The story</span></div>
+          <h2>Overview</h2>
+          <p class="overview">This 2008 BMW X5 in sleek black offers a bold and stylish exterior with its distinctive kidney grille and expansive alloy wheels. Inside, the vehicle features a well-maintained interior with elegant wood accents, while the custom red seat covers add a playful touch. The SUV shows signs of use consistent with its mileage but remains in overall good condition, making it a great choice for those seeking luxury and performance. Automatic transmission, air conditioning, gasoline V8 engine and 164,000 km.</p>
+        </section>
+      </div>
+
+      <aside class="listing-aside reveal-in reveal-in--delayed">
+        <div class="aside-card"><span class="aside-label">Vehicle ID</span><span class="aside-note">Listed in United Kingdom</span></div>
+        <div class="aside-card aside-card--dark"><span class="aside-label">Have a question?</span><h3>See it in person.</h3><p>Get in touch with our team to arrange a viewing or ask for more details.</p><button class="aside-button" type="button" data-open-contact>Contact the seller <span aria-hidden="true">↗</span></button></div>
+      </aside>
+    </section>
+  </main>
+
+  <footer class="listing-footer">
+    <div><a class="listing-footer__brand" href="index.html"><img src="onist.png" alt="Onist"></a><p>A luxury showroom for premium pre-owned vehicles.</p></div>
+    <div><strong>Explore</strong><a href="index.html#inventory">Inventory</a><a href="index.html#makes">Makes</a><a href="index.html#why">Why Us</a></div>
+    <div><strong>Contact</strong><a href="index.html#reviews">Reviews</a><a href="index.html#faq">FAQ</a><a href="index.html#sell">Sell your vehicle</a></div>
+    <p class="listing-footer__copyright">© 2026 Onist Cars. All rights reserved.</p>
+  </footer>
+
+  <div class="contact-modal" id="contactModal" aria-hidden="true">
+    <div class="modal-backdrop" data-close-contact></div>
+    <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="contactTitle">
+      <button class="modal-close" type="button" aria-label="Close contact form" data-close-contact>×</button>
+      <p class="eyebrow">BMW X5</p><h2 id="contactTitle">Start a conversation.</h2><p>Leave your details and the Onist team will help arrange a viewing.</p>
+      <form id="contactForm"><label>Name<input type="text" name="name" required autocomplete="name"></label><label>Email<input type="email" name="email" required autocomplete="email"></label><button class="primary-action" type="submit">Send enquiry <span aria-hidden="true">↗</span></button><p class="form-success" id="formSuccess" hidden>Thanks. Your enquiry is ready for the seller.</p></form>
+    </div>
+  </div>
+  <a class="whatsapp-float" href="https://wa.me/447507777517" target="_blank" rel="noopener" aria-label="Chat with Onist on WhatsApp">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 3.5A11.8 11.8 0 0 0 12.05 0C5.5 0 .18 5.32.18 11.87c0 2.09.55 4.13 1.59 5.93L.08 24l6.34-1.66a11.85 11.85 0 0 0 5.63 1.43h.01c6.55 0 11.87-5.32 11.87-11.87 0-3.17-1.23-6.14-3.43-8.4ZM12.06 21.7h-.01a9.82 9.82 0 0 1-5.01-1.37l-.36-.21-3.76.98 1-3.66-.23-.38a9.83 9.83 0 0 1-1.5-5.19C2.19 6.45 6.61 2.03 12.06 2.03c2.64 0 5.12 1.03 6.98 2.9a9.8 9.8 0 0 1 2.89 6.98c0 5.45-4.42 9.87-9.87 9.87Zm5.41-7.39c-.3-.15-1.77-.87-2.05-.97-.28-.1-.48-.15-.68.15-.2.3-.78.97-.96 1.17-.18.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.67-2.07-.17-.3-.02-.46.13-.61.14-.14.3-.35.45-.52.15-.18.2-.3.3-.5.1-.2.05-.38-.02-.53-.08-.15-.68-1.64-.93-2.25-.25-.6-.5-.52-.68-.53h-.58c-.2 0-.53.07-.8.38-.28.3-1.05 1.03-1.05 2.52s1.08 2.92 1.23 3.12c.15.2 2.13 3.25 5.16 4.56.72.31 1.28.5 1.72.64.72.23 1.37.2 1.89.12.58-.09 1.77-.72 2.02-1.42.25-.7.25-1.3.18-1.42-.08-.12-.28-.2-.58-.35Z"/></svg>
+  </a>
+  <script src="listing.js"></script>
+</body>
+</html>

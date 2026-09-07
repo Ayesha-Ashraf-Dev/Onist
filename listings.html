@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Listings | Onist Cars</title>
+  <meta name="description" content="Browse certified pre-owned vehicles from Onist Cars.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="fav.png">
+  <link rel="stylesheet" href="listings.css">
+  <style>
+    .browse-layout.filters-collapsed { grid-template-columns: 1fr; }
+    .filters-collapsed .listing-results { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .filter-panel.is-collapsed { display: none; }
+    .browse-card { border-radius: 24px; background: rgba(255,255,255,.88); }
+    .browse-card__media { aspect-ratio: 1.72; }
+    .browse-card__media::after { content: ""; position: absolute; inset: 0; background: linear-gradient(115deg, transparent 40%, rgba(255,255,255,.5) 50%, transparent 60%); transform: translateX(-120%) skewX(-15deg); transition: transform .9s cubic-bezier(.4,0,.2,1); pointer-events: none; }
+    .listing-badge { display: none; }
+    .browse-card:hover .browse-card__media::after { transform: translateX(120%) skewX(-15deg); }
+    .browse-card__body { padding: 16px 17px 18px; background: rgba(255,255,255,.88); }
+    .browse-card__fav { position: absolute; z-index: 3; top: 12px; right: 12px; display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: rgba(255,255,255,.9); color: #101827; font-size: 1.2rem; }
+    .browse-card__fav.is-saved { color: #1357f5; }
+    .whatsapp-float { position: fixed; right: 24px; bottom: 24px; z-index: 300; display: grid; place-items: center; width: 58px; height: 58px; border-radius: 50%; background: #25D366; color: #fff; animation: whatsappHeartbeat 1.65s ease-in-out infinite; }
+    .whatsapp-float svg { width: 31px; height: 31px; fill: currentColor; }
+    @keyframes whatsappHeartbeat { 0%, 100% { transform: scale(1); } 12% { transform: scale(1.13); } 24% { transform: scale(1); } 36% { transform: scale(1.09); } 52% { transform: scale(1); } }
+    @media (max-width: 680px) { .whatsapp-float { right: 16px; bottom: 16px; width: 52px; height: 52px; } .whatsapp-float svg { width: 28px; height: 28px; } }
+    @media (prefers-reduced-motion: reduce) { .whatsapp-float { animation: none; } }
+    @media (max-width: 1100px) { .filters-collapsed .listing-results { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+    @media (max-width: 760px) { .filters-collapsed .listing-results { grid-template-columns: repeat(2, minmax(0, 1fr)); } .filter-panel.is-collapsed { display: block; } }
+  </style>
+</head>
+<body>
+  <header class="browse-header">
+    <div class="browse-topline"><span>Onist Select</span><span>Premium pre-owned vehicles · Inspected with care</span><span>Open daily · 9AM–8PM</span></div>
+    <div class="browse-nav">
+      <a class="browse-brand" href="index.html"><img src="onist.png" alt="Onist Cars"></a>
+      <nav aria-label="Primary navigation"><a href="index.html">Home</a><a class="is-active" href="listings.html">Listings</a><a href="index.html#makes">Makes</a><a href="index.html#why">Why Us</a><a href="index.html#reviews">Reviews</a></nav>
+      <a class="sell-link" href="index.html#sell">Sell your vehicle</a>
+      <button class="mobile-menu" type="button" aria-label="Open menu">☰</button>
+    </div>
+  </header>
+
+  <main class="browse-main">
+    <div class="browse-heading"><div><p class="eyebrow">Onist inventory</p><h1>All listings <span>· 8 vehicles</span></h1></div><button class="mobile-filter-trigger" id="openFilters" type="button"><span aria-hidden="true">⌕</span> Filter cars</button></div>
+    <div class="browse-toolbar"><div class="view-toggle" aria-label="View mode"><button class="is-active" type="button" data-view="grid" aria-label="Grid view">▦</button><button type="button" data-view="list" aria-label="List view">☷</button></div><label class="sort-control"><span class="sr-only">Sort listings</span><select id="sortListings"><option value="newest">Newest first</option><option value="price-low">Price: low to high</option><option value="price-high">Price: high to low</option></select></label><button class="desktop-filter-trigger" id="openFiltersDesktop" type="button"><span aria-hidden="true">⌕</span> Filter cars</button></div>
+
+    <div class="browse-layout">
+      <section class="listing-results" id="listingResults" aria-live="polite">
+        <article class="browse-card" data-year="2023" data-price="79200" data-make="Porsche" data-type="Coupe" data-fuel="Electric"><a href="listing.html" class="browse-card__media"><span class="listing-badge">Certified</span><img src="images/ImageFour.png" alt="Porsche Taycan 4S" loading="lazy"></a><div class="browse-card__body"><h2>Porsche Taycan 4S</h2><strong>USD 79,200</strong><p>2023 <i></i> 8,200 km</p><div><span>Electric</span><span>Automatic</span></div></div></article>
+        <article class="browse-card" data-year="2023" data-price="118500" data-make="Nissan" data-type="Coupe" data-fuel="Gasoline"><a href="listing.html" class="browse-card__media"><span class="listing-badge">Great price</span><img src="images/ImageTwo.png" alt="Nissan GT-R 2023" loading="lazy"></a><div class="browse-card__body"><h2>Nissan GT-R 2023</h2><strong>USD 118,500</strong><p>2023 <i></i> 8,950 km</p><div><span>Gasoline</span><span>Automatic</span></div></div></article>
+        <article class="browse-card" data-year="2008" data-price="19500" data-make="BMW" data-type="SUV" data-fuel="Gasoline"><a href="listing.html" class="browse-card__media"><span class="listing-badge">Great price</span><img src="images/imageOne.png" alt="BMW X5 2008" loading="lazy"></a><div class="browse-card__body"><h2>2008 BMW X5</h2><strong>USD 19,500</strong><p>2008 <i></i> 164,000 km</p><div><span>Gasoline</span><span>Automatic</span></div></div></article>
+        <article class="browse-card" data-year="2022" data-price="74200" data-make="BMW" data-type="Coupe" data-fuel="Gasoline"><a href="listing.html" class="browse-card__media"><span class="listing-badge">Certified</span><img src="meridian.avif" alt="BMW M4 Competition" loading="lazy"></a><div class="browse-card__body"><h2>BMW M4 Competition</h2><strong>USD 74,200</strong><p>2022 <i></i> 16,200 km</p><div><span>Gasoline</span><span>Automatic</span></div></div></article>
+        <article class="browse-card" data-year="2022" data-price="61400" data-make="Mercedes" data-type="SUV" data-fuel="Gasoline"><a href="listing.html" class="browse-card__media"><span class="listing-badge">Best deal</span><img src="images/imageOne.png" alt="Mercedes-Benz GLE 450" loading="lazy"></a><div class="browse-card__body"><h2>Mercedes-Benz GLE 450</h2><strong>USD 61,400</strong><p>2022 <i></i> 14,600 km</p><div><span>Gasoline</span><span>Automatic</span></div></div></article>
+        <article class="browse-card" data-year="2023" data-price="88250" data-make="Audi" data-type="Coupe" data-fuel="Electric"><a href="listing.html" class="browse-card__media"><span class="listing-badge">Great price</span><img src="images/ImageFour.png" alt="Audi RS e-tron GT" loading="lazy"></a><div class="browse-card__body"><h2>Audi RS e-tron GT</h2><strong>USD 88,250</strong><p>2023 <i></i> 5,100 km</p><div><span>Electric</span><span>Automatic</span></div></div></article>
+        <article class="browse-card" data-year="2021" data-price="54000" data-make="Land Rover" data-type="SUV" data-fuel="Gasoline"><a href="listing.html" class="browse-card__media"><span class="listing-badge">One owner</span><img src="images/ImageTwo.png" alt="Land Rover Defender 110" loading="lazy"></a><div class="browse-card__body"><h2>Land Rover Defender 110</h2><strong>USD 54,000</strong><p>2021 <i></i> 28,100 km</p><div><span>Gasoline</span><span>Automatic</span></div></div></article>
+        <article class="browse-card" data-year="2021" data-price="47000" data-make="Tesla" data-type="Sedan" data-fuel="Electric"><a href="listing.html" class="browse-card__media"><span class="listing-badge">Recently serviced</span><img src="images/imageOne.png" alt="Tesla Model S Long Range" loading="lazy"></a><div class="browse-card__body"><h2>Tesla Model S Long Range</h2><strong>USD 47,000</strong><p>2021 <i></i> 19,300 km</p><div><span>Electric</span><span>Automatic</span></div></div></article>
+      </section>
+
+      <aside class="filter-panel" id="filterPanel" aria-label="Filter cars"><div class="filter-panel__head"><h2><span aria-hidden="true">⌕</span> Filter cars</h2><button id="closeFilters" type="button" aria-label="Close filters">×</button></div><div class="filter-fields"><label>Make<select data-filter="make"><option value="">Select make</option><option>BMW</option><option>Porsche</option><option>Nissan</option><option>Audi</option><option>Mercedes</option><option>Tesla</option><option>Land Rover</option></select></label><label>Model<select><option>Select model</option><option>X5</option><option>M4</option><option>GT-R</option></select></label><label>Body type<select data-filter="type"><option value="">Select type</option><option>SUV</option><option>Coupe</option><option>Sedan</option></select></label><label>Fuel type<select data-filter="fuel"><option value="">Select fuel type</option><option>Gasoline</option><option>Electric</option></select></label><label>Price range<span class="range-fields"><input id="minPrice" type="number" placeholder="Min"><input id="maxPrice" type="number" placeholder="Max"></span></label><label>Location<select><option>All locations</option><option>Oranjestad</option><option>Las Vegas</option><option>Miami</option></select></label><label>Badge<select><option>Any badge</option><option>Certified</option><option>Great price</option></select></label></div><button class="apply-filters" id="applyFilters" type="button"><span aria-hidden="true">⌕</span> Apply filters</button></aside>
+    </div>
+  </main>
+  <div class="filter-backdrop" id="filterBackdrop"></div>
+  <a class="whatsapp-float" href="https://wa.me/447507777517" target="_blank" rel="noopener" aria-label="Chat with Onist on WhatsApp">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 3.5A11.8 11.8 0 0 0 12.05 0C5.5 0 .18 5.32.18 11.87c0 2.09.55 4.13 1.59 5.93L.08 24l6.34-1.66a11.85 11.85 0 0 0 5.63 1.43h.01c6.55 0 11.87-5.32 11.87-11.87 0-3.17-1.23-6.14-3.43-8.4ZM12.06 21.7h-.01a9.82 9.82 0 0 1-5.01-1.37l-.36-.21-3.76.98 1-3.66-.23-.38a9.83 9.83 0 0 1-1.5-5.19C2.19 6.45 6.61 2.03 12.06 2.03c2.64 0 5.12 1.03 6.98 2.9a9.8 9.8 0 0 1 2.89 6.98c0 5.45-4.42 9.87-9.87 9.87Zm5.41-7.39c-.3-.15-1.77-.87-2.05-.97-.28-.1-.48-.15-.68.15-.2.3-.78.97-.96 1.17-.18.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.67-2.07-.17-.3-.02-.46.13-.61.14-.14.3-.35.45-.52.15-.18.2-.3.3-.5.1-.2.05-.38-.02-.53-.08-.15-.68-1.64-.93-2.25-.25-.6-.5-.52-.68-.53h-.58c-.2 0-.53.07-.8.38-.28.3-1.05 1.03-1.05 2.52s1.08 2.92 1.23 3.12c.15.2 2.13 3.25 5.16 4.56.72.31 1.28.5 1.72.64.72.23 1.37.2 1.89.12.58-.09 1.77-.72 2.02-1.42.25-.7.25-1.3.18-1.42-.08-.12-.28-.2-.58-.35Z"/></svg>
+  </a>
+  <script src="listings.js"></script>
+</body>
+</html>
