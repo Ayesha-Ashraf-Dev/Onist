@@ -6,6 +6,7 @@
 (function () {
   "use strict";
 
+  const INITIAL_AUTOPLAY_DELAY = 1500;
   const AUTOPLAY_DELAY = 3500;
   const TOTAL_SLIDES = 8;
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -219,10 +220,10 @@
   /* =========================================================
      AUTOPLAY
      ========================================================= */
-  function startAutoplay() {
+  function startAutoplay(delay = AUTOPLAY_DELAY) {
     stopAutoplay();
     if (prefersReducedMotion) return;
-    autoplayTimer = setTimeout(goNext, AUTOPLAY_DELAY);
+    autoplayTimer = setTimeout(goNext, delay);
   }
 
   function stopAutoplay() {
@@ -283,9 +284,9 @@
 
     const preloader = document.getElementById("preloader");
     if (!preloader || preloader.classList.contains("is-done")) {
-      startAutoplay();
+      startAutoplay(INITIAL_AUTOPLAY_DELAY);
     } else {
-      document.addEventListener("onist:hero-ready", startAutoplay, { once: true });
+      document.addEventListener("onist:hero-ready", () => startAutoplay(INITIAL_AUTOPLAY_DELAY), { once: true });
     }
   }
 

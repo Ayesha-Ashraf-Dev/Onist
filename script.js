@@ -69,7 +69,10 @@
     tl.add(() => { glowAnim.kill(); }, pause) // stop pulsing
       .to("#morphHeadlightGroup", { opacity: 1, scale: 1.2, duration: 0.3, transformOrigin: "center" })
       .to(".preloader__car-box", { x: window.innerWidth > 768 ? 800 : 400, filter: "blur(6px)", duration: 0.65, ease: "power3.in" }, "+=0.1")
-      .to("#preloaderLogo", { opacity: 1, y: -10, duration: 0.6, ease: "power2.out" }, "-=0.2")
+      .to(".preloader__flash", { opacity: 0.7, duration: 0.08, ease: "power4.out" }, "-=0.2")
+      .to(".preloader__flash", { opacity: 0, duration: 0.45, ease: "power2.out" })
+      .to("#preloaderLogo", { opacity: 1, y: -10, scale: 1.06, duration: 0.7, ease: "back.out(1.7)" }, "-=0.25")
+      .to("#preloaderLogo img", { scale: 1, duration: 0.55, ease: "power3.out" }, "-=0.45")
       .to(preloader, { opacity: 0, duration: 0.5, ease: "power2.inOut" }, "+=0.4");
   }
 

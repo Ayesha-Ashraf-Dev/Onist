@@ -27,6 +27,9 @@
     @keyframes whatsappHeartbeat { 0%, 100% { transform: scale(1); } 12% { transform: scale(1.13); } 24% { transform: scale(1); } 36% { transform: scale(1.09); } 52% { transform: scale(1); } }
     @media (max-width: 680px) { .whatsapp-float { right: 16px; bottom: 16px; width: 52px; height: 52px; } .whatsapp-float svg { width: 28px; height: 28px; } }
     @media (prefers-reduced-motion: reduce) { .whatsapp-float { animation: none; } }
+    .filter-fields select, .sort-control select { appearance: none; -webkit-appearance: none; padding-right: 38px; border-color: #dfe5ee; border-radius: 8px; background-color: #fff; background-image: linear-gradient(45deg, transparent 50%, #667085 50%), linear-gradient(135deg, #667085 50%, transparent 50%); background-position: calc(100% - 17px) 18px, calc(100% - 12px) 18px; background-repeat: no-repeat; background-size: 5px 5px, 5px 5px; transition: border-color .2s ease, box-shadow .2s ease; }
+    .filter-fields select:hover, .sort-control select:hover { border-color: #b9c5d6; }
+    .filter-fields select:focus, .sort-control select:focus { border-color: #1357f5; box-shadow: 0 0 0 3px rgba(19,87,245,.12); outline: none; }
     @media (max-width: 1100px) { .filters-collapsed .listing-results { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
     @media (max-width: 760px) { .filters-collapsed .listing-results { grid-template-columns: repeat(2, minmax(0, 1fr)); } .filter-panel.is-collapsed { display: block; } }
   </style>

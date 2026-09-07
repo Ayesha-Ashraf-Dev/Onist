@@ -52,6 +52,24 @@ body {
 a { color: inherit; text-decoration: none; }
 button { font: inherit; color: inherit; background: none; border: none; cursor: pointer; }
 input, select { font: inherit; color: inherit; }
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  min-height: 42px;
+  padding: 10px 38px 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background-color: var(--white);
+  background-image: linear-gradient(45deg, transparent 50%, var(--text-soft) 50%), linear-gradient(135deg, var(--text-soft) 50%, transparent 50%);
+  background-position: calc(100% - 17px) 18px, calc(100% - 12px) 18px;
+  background-repeat: no-repeat;
+  background-size: 5px 5px, 5px 5px;
+  color: var(--text);
+  font-size: .86rem;
+  transition: border-color .2s var(--ease-soft), box-shadow .2s var(--ease-soft), background-color .2s var(--ease-soft);
+}
+select:hover { border-color: #b9c5d6; background-color: #fbfdff; }
+select:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(19,87,245,.12); outline: none; }
 h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 600; letter-spacing: -0.01em; }
 
 :focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; }
@@ -78,20 +96,21 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 600; letter-spac
   display: flex; align-items: center; justify-content: center;
   overflow: hidden; pointer-events: auto;
   will-change: opacity, transform, filter;
-  background: #FFFFFF;
+  background: #f7faff;
 }
 
 .preloader__bg {
   position: absolute; inset: 0;
-  background: #FFFFFF;
+  background: radial-gradient(circle at 50% 48%, #ffffff 0%, #f2f6ff 58%, #e7efff 100%);
   z-index: 1;
 }
 
 .preloader__glow {
   position: absolute; inset: 0;
-  background: radial-gradient(circle at 50% 50%, rgba(100, 180, 255, 0.05) 0%, transparent 60%);
+  background: radial-gradient(circle at 50% 50%, rgba(19,87,245,.18) 0%, rgba(19,87,245,.04) 28%, transparent 66%);
   z-index: 1;
 }
+.preloader__flash { position: absolute; inset: 0; z-index: 3; background: #fff; opacity: 0; pointer-events: none; }
 
 .preloader__stage {
   position: relative; z-index: 2;
@@ -99,6 +118,10 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 600; letter-spac
   width: 100%; text-align: center;
   will-change: transform, filter;
 }
+.preloader__stage::before, .preloader__stage::after { content: ""; position: absolute; left: 50%; top: 50%; width: min(52vw, 520px); aspect-ratio: 1; border: 1px solid rgba(19,87,245,.14); border-radius: 50%; transform: translate(-50%, -50%) scale(.72); opacity: 0; pointer-events: none; }
+.preloader__stage::before { animation: preloaderOrbit 2.8s var(--ease-out) .3s forwards; }
+.preloader__stage::after { width: min(72vw, 720px); border-color: rgba(19,87,245,.07); animation: preloaderOrbit 3.2s var(--ease-out) .45s forwards; }
+@keyframes preloaderOrbit { 0% { opacity: 0; transform: translate(-50%, -50%) scale(.72) rotate(-18deg); } 35% { opacity: 1; } 100% { opacity: 0; transform: translate(-50%, -50%) scale(1.16) rotate(18deg); } }
 
 .preloader__car-box {
   position: relative;
@@ -139,7 +162,9 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 600; letter-spac
   font-size: 1.2rem; font-weight: 600;
   letter-spacing: 0.1em;
   will-change: opacity, transform;
+  filter: drop-shadow(0 8px 20px rgba(19,87,245,.18));
 }
+.preloader__logo img { transform: scale(.86); transition: transform .7s var(--ease-out); }
 
 .preloader.is-done { opacity: 0; pointer-events: none; }
 
@@ -916,17 +941,16 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 600; letter-spac
 @media (max-width: 860px) {
   .road-scrollbar {
     right: auto;
-    left: 8px;
+    left: 4px;
     height: 48dvh;
     min-height: 260px;
     max-height: 420px;
-    width: 32px;
+    width: 24px;
+    pointer-events: none;
   }
 
   .road-scrollbar__label {
-    right: auto;
-    left: calc(100% + 10px);
-    transform: translateX(-6px);
+    display: none;
   }
 
   .road-scrollbar__milestone:hover .road-scrollbar__label,
@@ -938,6 +962,8 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 600; letter-spac
     width: 11px;
     height: 11px;
   }
+
+  .road-scrollbar__milestone { pointer-events: auto; }
 
   .road-scrollbar__car svg {
     width: 22px;
